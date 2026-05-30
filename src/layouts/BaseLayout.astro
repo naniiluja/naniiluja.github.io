@@ -22,6 +22,18 @@ const rssUrl = new URL('rss.xml', Astro.site);
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Áp theme TRƯỚC khi render body để chống FOUC. is:inline để không bị bundle/defer.
+         Mặc định tối: chỉ bỏ .dark khi đã lưu 'light'. try/catch vì localStorage có thể throw
+         (chế độ riêng tư) — fallback tường minh về dark, không silent-catch rỗng. -->
+    <script is:inline>
+      try {
+        document.documentElement.classList.toggle('dark', localStorage.theme !== 'light');
+      } catch {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     {description && <meta name="description" content={description} />}

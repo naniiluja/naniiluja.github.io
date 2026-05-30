@@ -1,2 +1,6 @@
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
+
+/* Toggle dark mode thủ công bằng class .dark trên <html> (thay media query prefers-color-scheme).
+   Sau dòng này mọi class dark:* trong markup ăn theo .dark thay vì theo OS. */
+@custom-variant dark (&:where(.dark, .dark *));

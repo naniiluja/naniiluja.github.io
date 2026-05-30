@@ -7,7 +7,9 @@ const links = [
 ];
 ---
 
-<nav class="mb-10 flex gap-4 border-b border-slate-100 pb-4 text-sm dark:border-slate-800">
+<nav
+  class="mb-10 flex items-baseline gap-4 border-b border-slate-100 pb-4 text-sm dark:border-slate-800"
+>
   {
     links.map((link) => (
       <a
@@ -18,4 +20,42 @@ const links = [
       </a>
     ))
   }
+  <!-- Nút chuyển theme: nhãn = chế độ sẽ chuyển sang. Nhãn mặc định 'light' (vì mặc định tối) để
+       no-JS / trước hydrate vẫn thấy chữ; script đồng bộ lại theo theme thực khi load (tránh flicker). -->
+  <button
+    id="theme-toggle"
+    type="button"
+    class="ml-auto cursor-pointer text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
+    aria-label="Chuyển chế độ sáng/tối">light</button
+  >
 </nav>
+
+<script>
+  // Logic thuần tái dùng từ src/lib (shipped == tested). Chỉ phần chạm DOM/localStorage ở đây.
+  import { nextTheme, type Theme } from '../lib/theme';
+
+  const btn = document.getElementById('theme-toggle');
+  if (btn) {
+    const current = (): Theme =>
+      document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+
+    // Áp theme + đồng bộ nhãn (= nextTheme(theme) = chế độ sẽ chuyển sang). Một chỗ duy nhất.
+    const render = (theme: Theme): void => {
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+      btn.textContent = nextTheme(theme);
+    };
+
+    // Đồng bộ nhãn ngay khi load theo theme hiện tại (đã do inline head script đặt) → không flicker.
+    render(current());
+
+    btn.addEventListener('click', () => {
+      const target = nextTheme(current());
+      render(target);
+      try {
+        localStorage.theme = target;
+      } catch {
+        // Bỏ qua nếu localStorage không khả dụng (chế độ riêng tư) — theme vẫn đổi trong phiên.
+      }
+    });
+  }
+</script>
