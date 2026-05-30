@@ -9,6 +9,7 @@
 - **M1 — Khung site render được:** task 001–002.
 - **M2 — Blog đọc được đầy đủ:** task 003–005.
 - **M3 — Phân phối + SEO + deploy:** task 006–008.
+- **M4 — Theme sáng/tối:** task 009–010.
 
 ## Task backlog (in execution order)
 | # | Slice | Layers | Gate (tests green) | Depends on | Status |
@@ -21,6 +22,8 @@
 | 006 | RSS feed + `astro.config` `site` (root site URL) | endpoint + config | unit test `buildRssItems` xanh; `dist/rss.xml` tồn tại với URL tuyệt đối đúng | 005 | done |
 | 007 | Sitemap (`@astrojs/sitemap`) + SEO meta (canonical, OG, RSS discovery) trong BaseLayout | integration + layout meta | `dist/sitemap-index.xml` tồn tại; `<head>` trong `dist/index.html` có canonical + RSS alternate + OG | 006 | done |
 | 008 | CI/CD GitHub Actions deploy GitHub Pages (root site) | CI workflow | `astro build` ra `dist/` local; `.github/workflows/deploy.yml` parse hợp lệ + chứa `withastro/action@v6` và `permissions: pages: write, id-token: write` | 007 | done |
+| 009 | Bật class-based dark mode (`@custom-variant`) + helper thuần `theme.ts` + inline FOUC script, mặc định tối (bỏ phụ thuộc OS); CHƯA có nút | css entry + helper + layout head | unit test `resolveTheme` + `nextTheme` xanh; `astro check` pass; `dist/index.html` có inline script toggle `.dark` trong `<head>`; preview localStorage trống → nền tối | 008 | in-review |
+| 010 | Nút toggle text trong Nav (chuyển sáng↔tối, lưu localStorage), handler dùng helper thuần `nextTheme`/`toggleLabel` | helper + component Nav | unit test `toggleLabel` xanh; `dist/index.html` có `<button>` toggle + script set `localStorage.theme`; verify preview: bấm đổi + reload giữ lựa chọn + clear → về tối | 009 | in-review |
 
 > Status: `todo` / `in-progress` / `in-review` / `done` / `blocked`. Lifecycle: `todo → in-progress → in-review → done`. `ccf-implementer` marks `in-review` when code+test are complete; only `/ccf:ccf-updatespec` writes `done` after `/ccf:ccf-check` + `/code-review` pass.
 > Per-task detail in `task-NNN-*.md`.
