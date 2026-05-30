@@ -50,6 +50,20 @@ const rssUrl = new URL('rss.xml', Astro.site);
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content="naniiluja" />
     <meta property="og:locale" content="vi_VN" />
+
+    <!-- GoatCounter: analytics nhẹ, không cookie. Guard no_onload để KHÔNG đếm
+         localhost/preview (chỉ chạy ở production github.io) — tránh bẩn số liệu bằng lượt dev. -->
+    <script is:inline>
+      // Chỉ bật khi đúng host production; nếu không thì bật no_onload để bỏ qua local/preview.
+      if (window.location.hostname !== 'naniiluja.github.io') {
+        window.goatcounter = { no_onload: true };
+      }
+    </script>
+    <script
+      is:inline
+      data-goatcounter="https://naniiluja.goatcounter.com/count"
+      async
+      src="//gc.zgo.at/count.js"></script>
   </head>
   <body
     class="min-h-screen bg-white text-slate-900 antialiased dark:bg-slate-900 dark:text-slate-100"
