@@ -20,7 +20,13 @@ body {
   font-family: var(--font-sans);
 }
 
-/* Vùng đọc (prose = nội dung bài viết) dùng serif, đúng như .content của Boris. */
+/* Vùng đọc (prose = nội dung bài viết) dùng serif, đúng như .content của Boris.
+   - Bỏ max-width 65ch mặc định của Tailwind Typography để nội dung rộng bằng container
+     (trước đây hẹp hơn cả tiêu đề nằm ngoài .prose → trông bó buộc).
+   - Cỡ chữ 18px / line-height 1.7: Boris dùng 18px/28px; 1.7 theo best practice đọc dài cho serif. */
 .prose {
   font-family: var(--font-serif);
+  max-width: none;
+  font-size: 18px;
+  line-height: 1.7;
 }
