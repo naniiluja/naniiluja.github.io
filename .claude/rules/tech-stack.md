@@ -24,6 +24,7 @@ Philosophy: prefer the **most stable, most widely-supported, least-buggy** stack
 ## Tailwind v4 note (tránh drift sang config v3)
 - Plugin đăng ký qua `@plugin "@tailwindcss/typography"` trong file CSS entry (vd `src/styles/global.css` mở đầu bằng `@import "tailwindcss";`), **KHÔNG** dùng `tailwind.config.js` kiểu v3 (`require(...)` trong `plugins: []`).
 - Áp `prose` lên container chứa `<Content />` ở trang bài viết (vd `class="prose prose-slate dark:prose-invert"`).
+- **Dark mode = toggle thủ công bằng class** (KHÔNG dùng media query `prefers-color-scheme` mặc định): thêm `@custom-variant dark (&:where(.dark, .dark *));` vào CSS entry → mọi `dark:*` ăn theo class `.dark` trên `<html>`. **Mặc định TỐI** (khách mới luôn tối bất kể OS): inline `<script is:inline>` trong `<head>` (chống FOUC, có try/catch fallback `.dark`), chỉ ra sáng khi `localStorage.theme === 'light'`. Logic thuần (resolveTheme/nextTheme) đặt `src/lib/theme.ts` để test; nhãn nút = `nextTheme(theme)` (chế độ sẽ chuyển sang).
 
 ## Rules
 - Do not add a new library outside the list above without comparing best practices via Context7 and updating this file.
