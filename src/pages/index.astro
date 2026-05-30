@@ -1,0 +1,22 @@
+---
+// Trang chủ: liệt kê bài đã publish, sắp xếp mới → cũ.
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostListItem from '../components/PostListItem.astro';
+import { getPublishedPostsSorted } from '../lib/get-posts';
+
+const posts = getPublishedPostsSorted(await getCollection('blog'));
+---
+
+<BaseLayout title="naniiluja" description="Blog cá nhân của naniiluja">
+  <h1 class="text-3xl font-bold">naniiluja</h1>
+  <p class="mt-2 text-slate-600 dark:text-slate-400">Blog cá nhân — vài dòng về code và đời.</p>
+
+  <ul class="mt-8">
+    {
+      posts.map((post) => (
+        <PostListItem id={post.id} title={post.data.title} date={post.data.date} />
+      ))
+    }
+  </ul>
+</BaseLayout>

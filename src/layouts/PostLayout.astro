@@ -1,0 +1,27 @@
+---
+// Layout cho trang bài viết: bọc nội dung trong container .prose (typography).
+import BaseLayout from './BaseLayout.astro';
+import { formatDate } from '../lib/format-date';
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+}
+
+const { title, description, date } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} ogType="article">
+  <article>
+    <header class="mb-6">
+      <h1 class="text-3xl font-bold">{title}</h1>
+      <time class="text-sm text-slate-500" datetime={date.toISOString()}>
+        {formatDate(date)}
+      </time>
+    </header>
+    <div class="prose prose-slate dark:prose-invert">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>

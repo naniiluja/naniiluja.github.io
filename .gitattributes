@@ -1,0 +1,5 @@
+# Chuẩn hóa line-ending: text dùng LF trong repo, tránh noise CRLF trên Windows.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.svg text eol=lf

@@ -1,0 +1,33 @@
+---
+// Trang lọc bài theo tag. getStaticPaths sinh route từ extractUniqueTags (chỉ bài publish).
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostListItem from '../../components/PostListItem.astro';
+import { extractUniqueTags, filterPostsByTag } from '../../lib/tags';
+import { getPublishedPostsSorted } from '../../lib/get-posts';
+
+export async function getStaticPaths() {
+  const published = (await getCollection('blog')).filter((p) => !p.data.draft);
+  const tags = extractUniqueTags(published);
+  return tags.map((tag) => ({
+    params: { tag },
+    props: { tag, posts: getPublishedPostsSorted(filterPostsByTag(published, tag)) },
+  }));
+}
+
+// Dùng tag từ props (đã truyền qua getStaticPaths, type string) thay vì Astro.params.tag.
+// KHÔNG decodeURI: Astro đã decode param sẵn → decode lần nữa gây URIError với tag chứa '%'.
+const { tag, posts } = Astro.props;
+---
+
+<BaseLayout title={`Thẻ #${tag} — naniiluja`} description={`Các bài viết gắn thẻ ${tag}.`}>
+  <h1 class="text-3xl font-bold">#{tag}</h1>
+  <p class="mt-2 text-slate-600 dark:text-slate-400">{posts.length} bài viết</p>
+  <ul class="mt-8">
+    {
+      posts.map((post) => (
+        <PostListItem id={post.id} title={post.data.title} date={post.data.date} />
+      ))
+    }
+  </ul>
+</BaseLayout>

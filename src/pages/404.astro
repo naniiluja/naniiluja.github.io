@@ -1,0 +1,14 @@
+---
+// Trang 404 tĩnh (yêu cầu error-handling.md). GitHub Pages tự dùng 404.html cho trang lỗi.
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Không tìm thấy trang — naniiluja" description="Trang bạn tìm không tồn tại.">
+  <div class="text-center">
+    <h1 class="text-5xl font-bold">404</h1>
+    <p class="mt-4 text-slate-600 dark:text-slate-400">Không tìm thấy trang bạn yêu cầu.</p>
+    <a href="/" class="mt-6 inline-block text-slate-900 underline dark:text-slate-100">
+      ← Về trang chủ
+    </a>
+  </div>
+</BaseLayout>

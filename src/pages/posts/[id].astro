@@ -1,0 +1,24 @@
+---
+// Trang chi tiết bài viết. Astro 5: dùng post.id (KHÔNG slug), render(post) (KHÔNG post.render()).
+import { getCollection, render } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+import { postSlug } from '../../lib/post-slug';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  // Lọc draft: bài draft:true KHÔNG sinh route → không leak URL.
+  return posts
+    .filter((post) => !post.data.draft)
+    .map((post) => ({
+      params: { id: postSlug(post.id) },
+      props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<PostLayout title={post.data.title} description={post.data.description} date={post.data.date}>
+  <Content />
+</PostLayout>

@@ -1,0 +1,48 @@
+---
+// Layout chung: chứa <head> + meta SEO (canonical, OG, RSS alternate) + import global.css một lần.
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** OG type: 'website' cho trang thường, 'article' cho bài viết. */
+  ogType?: 'website' | 'article';
+}
+
+const { title, description, ogType = 'website' } = Astro.props;
+
+// Canonical + RSS alternate dựng từ Astro.site (cấu hình trong astro.config.mjs).
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const rssUrl = new URL('rss.xml', Astro.site);
+---
+
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    {description && <meta name="description" content={description} />}
+    <title>{title}</title>
+
+    <!-- SEO: canonical + RSS discovery -->
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" type="application/rss+xml" title="naniiluja" href={rssUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={canonicalUrl} />
+  </head>
+  <body
+    class="min-h-screen bg-white text-slate-900 antialiased dark:bg-slate-900 dark:text-slate-100"
+  >
+    <main class="mx-auto max-w-2xl px-4 py-10">
+      <Nav />
+      <slot />
+    </main>
+  </body>
+</html>
