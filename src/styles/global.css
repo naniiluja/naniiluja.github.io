@@ -4,3 +4,23 @@
 /* Toggle dark mode thủ công bằng class .dark trên <html> (thay media query prefers-color-scheme).
    Sau dòng này mọi class dark:* trong markup ăn theo .dark thay vì theo OS. */
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* Font giống borischerny.com — toàn bộ font hệ thống, KHÔNG tải web-font (zero request, đúng
+   tinh thần tĩnh + privacy). Boris dùng: body = system sans, vùng nội dung đọc = serif Palatino/Georgia.
+   Override token Tailwind v4 qua @theme để cả utility (font-sans/font-serif) lẫn prose cùng ăn theo. */
+@theme {
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  --font-serif: Palatino, 'Palatino Linotype', Georgia, Times, 'Times New Roman', serif;
+}
+
+/* Mặc định cả site dùng system sans (như <body> của Boris). */
+body {
+  font-family: var(--font-sans);
+}
+
+/* Vùng đọc (prose = nội dung bài viết) dùng serif, đúng như .content của Boris. */
+.prose {
+  font-family: var(--font-serif);
+}
