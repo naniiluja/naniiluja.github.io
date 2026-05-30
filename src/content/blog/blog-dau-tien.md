@@ -1,6 +1,6 @@
 ---
 title: Blog đầu tiên
-date: 2025-05-30
+date: 2026-05-30
 description: Hành trình từ một thằng nhóc mê công nghệ đến khi coi coding là một nghề — từ wap Ngọc Rồng Online, dự án Toyota ở FPT, đến Momo và những người đã giúp đỡ trên đường đi.
 tags:
   - personal
