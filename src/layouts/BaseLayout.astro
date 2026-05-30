@@ -43,11 +43,13 @@ const rssUrl = new URL('rss.xml', Astro.site);
     <link rel="canonical" href={canonicalUrl} />
     <link rel="alternate" type="application/rss+xml" title="naniiluja" href={rssUrl} />
 
-    <!-- Open Graph -->
+    <!-- Open Graph: Facebook / Instagram / Threads / LinkedIn đều đọc OG khi share. -->
     <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     {description && <meta property="og:description" content={description} />}
     <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content="naniiluja" />
+    <meta property="og:locale" content="vi_VN" />
   </head>
   <body
     class="min-h-screen bg-white text-slate-900 antialiased dark:bg-slate-900 dark:text-slate-100"
