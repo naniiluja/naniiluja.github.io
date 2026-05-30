@@ -6,7 +6,10 @@ tags:
   - claude-code
   - ai
 draft: false
+image: /claude-md.png
 ---
+
+![CLAUDE.md](/claude-md.png)
 
 Tối nay trời mưa và mình rảnh háng, nên sẽ tản mạn về CLAUDE.md của Claude Code từ những nguồn mà mình tìm hiểu và sưu tầm (turn on the LowG music bae).
 

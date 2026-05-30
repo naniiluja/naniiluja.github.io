@@ -13,6 +13,9 @@ const blog = defineCollection({
     description: z.string(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
+    // Ảnh share (OG image) cho bài, đường dẫn từ /public (vd '/claude-md.png'). Optional:
+    // bài không khai báo thì BaseLayout dùng ảnh OG mặc định chung của site.
+    image: z.string().optional(),
   }),
 });
 

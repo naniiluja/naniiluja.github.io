@@ -8,13 +8,20 @@ interface Props {
   description?: string;
   /** OG type: 'website' cho trang thường, 'article' cho bài viết. */
   ogType?: 'website' | 'article';
+  /** Ảnh share (OG image), path từ /public (vd '/claude-md.png'). Thiếu thì dùng ảnh mặc định. */
+  image?: string;
 }
 
-const { title, description, ogType = 'website' } = Astro.props;
+// Ảnh OG mặc định chung cho site khi trang/bài không khai báo image riêng.
+const DEFAULT_OG_IMAGE = '/claude-md.png';
+
+const { title, description, ogType = 'website', image = DEFAULT_OG_IMAGE } = Astro.props;
 
 // Canonical + RSS alternate dựng từ Astro.site (cấu hình trong astro.config.mjs).
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 const rssUrl = new URL('rss.xml', Astro.site);
+// OG image PHẢI là URL tuyệt đối — Facebook/Threads/LinkedIn không nhận path tương đối.
+const ogImageUrl = new URL(image, Astro.site);
 ---
 
 <!doctype html>
@@ -50,6 +57,13 @@ const rssUrl = new URL('rss.xml', Astro.site);
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content="naniiluja" />
     <meta property="og:locale" content="vi_VN" />
+    <meta property="og:image" content={ogImageUrl} />
+
+    <!-- Twitter/X Card: dùng ảnh lớn khi share. twitter:image cũng cần URL tuyệt đối. -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    {description && <meta name="twitter:description" content={description} />}
+    <meta name="twitter:image" content={ogImageUrl} />
 
     <!-- GoatCounter: analytics nhẹ, không cookie. Guard no_onload để KHÔNG đếm
          localhost/preview (chỉ chạy ở production github.io) — tránh bẩn số liệu bằng lượt dev. -->
