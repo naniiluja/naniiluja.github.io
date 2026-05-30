@@ -20,7 +20,7 @@ Và cũng may mắn thay là một người bạn ở trong dự án Toyota cũ 
 
 Hôm nay cũng là lần đầu mà mình viết một văn bản dài như vậy. Bật mí cho các bạn là trước đây mình từng đạt 9.5 điểm Ngữ Văn hồi cấp ba và đã từng đi thi học sinh giỏi Văn đấy, haha. Nhưng giờ sau gần 10 năm không viết thì trình viết của mình cũng mai một rồi, không còn sắc sảo như xưa nữa. Hôm nay tự dưng hứng lên viết một quả blog, dựa theo cảm hứng từ Boris Cherny, ông này là người tạo ra Claude Code, cũng chính là công cụ để mình tạo ra blog này. Tất nhiên là vì câu cú sẽ không được hoàn hảo, cho nên mình có thể sẽ nhờ bé Claude của mình chỉnh sửa một tí về chính tả và câu cú, cũng như là format lại với định dạng markdown. Nhưng không phải hoàn toàn đâu, cái này là mình tự viết đấy nhá.
 
-Kết bài, mình hy vọng là có người nào đó mò vào và đọc được blog của mình. Nếu đọc được thì hộp kín và chọc mình nhé, cứ nhắn vào thằng FB hay Instagram **@minhlawangchuai** là được ấy mà. haha
+Kết bài, mình hy vọng là có người nào đó mò vào và đọc được blog của mình. Nếu đọc được thì hộp kín và chọc mình nhé, cứ nhắn thẳng vào Instagram **@minhlawangchuai** là được ấy mà. haha
 
 *Ngày 30/5/2025*\
 *Quang*
