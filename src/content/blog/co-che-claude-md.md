@@ -1,6 +1,6 @@
 ---
 title: 'Tản mạn về CLAUDE.md: nó nằm ở đâu trong mắt Claude Code?'
-date: 2026-05-30
+date: 2026-05-30T22:10:00+07:00
 description: Tại sao bạn viết quy tắc trong CLAUDE.md mà agent không thèm theo? Vì bạn chưa biết đoạn text đó nằm ở đâu, được inject thế nào và ưu tiên ra sao. Hôm nay mình phân tích cơ chế đó.
 tags:
   - claude-code
