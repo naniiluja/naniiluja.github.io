@@ -9,7 +9,7 @@ const published = (await getCollection('blog')).filter((p) => !p.data.draft);
 const tags = extractUniqueTags(published);
 ---
 
-<BaseLayout title="tags" description="Tất cả các thẻ trên naniiluja.">
+<BaseLayout title="tags" description="Tất cả các tags trên naniiluja.">
   <h1 class="text-3xl font-bold">tags</h1>
   <ul class="mt-8 flex flex-wrap gap-3">
     {

@@ -20,7 +20,7 @@ export async function getStaticPaths() {
 const { tag, posts } = Astro.props;
 ---
 
-<BaseLayout title={`Thẻ #${tag} — naniiluja`} description={`Các bài viết gắn thẻ ${tag}.`}>
+<BaseLayout title={`Tag #${tag} naniiluja`} description={`Các bài viết gắn tag ${tag}.`}>
   <h1 class="text-3xl font-bold">#{tag}</h1>
   <p class="mt-2 text-slate-600 dark:text-slate-400">{posts.length} bài viết</p>
   <ul class="mt-8">
