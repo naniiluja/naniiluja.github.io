@@ -22,5 +22,5 @@ Hôm nay cũng là lần đầu mà mình viết một văn bản dài như vậ
 
 Kết bài, mình hy vọng là có người nào đó mò vào và đọc được blog của mình. Nếu đọc được thì hộp kín và chọc mình nhé, cứ nhắn vào thằng FB hay Instagram **@minhlawangchuai** là được ấy mà. haha
 
-*Ngày 30/5/2025*
+*Ngày 30/5/2025*\
 *Quang*
