@@ -13,9 +13,13 @@ const blog = defineCollection({
     description: z.string(),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
-    // Ảnh share (OG image) cho bài, đường dẫn từ /public (vd '/claude-md.png'). Optional:
+    // Ảnh share (OG image) cho bài, đường dẫn tuyệt đối từ /public (vd '/claude-md.png'). Optional:
     // bài không khai báo thì BaseLayout dùng ảnh OG mặc định chung của site.
-    image: z.string().optional(),
+    // regex bắt buộc bắt đầu bằng '/' → chặn chuỗi rác làm vỡ new URL(...) lúc build (fail sớm, rõ field).
+    image: z
+      .string()
+      .regex(/^\/\S+$/, "image phải là path tuyệt đối bắt đầu bằng '/' (vd /cover.png)")
+      .optional(),
   }),
 });
 

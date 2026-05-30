@@ -2,6 +2,7 @@
 // Layout chung: chứa <head> + meta SEO (canonical, OG, RSS alternate) + import global.css một lần.
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
+import { resolveOgImage } from '../lib/og-image';
 
 interface Props {
   title: string;
@@ -12,16 +13,14 @@ interface Props {
   image?: string;
 }
 
-// Ảnh OG mặc định chung cho site khi trang/bài không khai báo image riêng.
-const DEFAULT_OG_IMAGE = '/claude-md.png';
-
-const { title, description, ogType = 'website', image = DEFAULT_OG_IMAGE } = Astro.props;
+const { title, description, ogType = 'website', image } = Astro.props;
 
 // Canonical + RSS alternate dựng từ Astro.site (cấu hình trong astro.config.mjs).
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 const rssUrl = new URL('rss.xml', Astro.site);
 // OG image PHẢI là URL tuyệt đối — Facebook/Threads/LinkedIn không nhận path tương đối.
-const ogImageUrl = new URL(image, Astro.site);
+// resolveOgImage (helper thuần, có test) lo fallback DEFAULT khi thiếu.
+const ogImageUrl = new URL(resolveOgImage(image), Astro.site);
 ---
 
 <!doctype html>
