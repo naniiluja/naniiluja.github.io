@@ -1,7 +1,7 @@
 ---
 title: MEMORY.md hoạt động như thế nào trong Claude Code
 date: 2026-05-31T20:00:00+07:00
-description: Memory được load thẳng vào system prompt nên được tuân theo mạnh hơn CLAUDE.md. Bài này phân tích cơ chế Memory của Claude Code - giới hạn, bốn loại, cái gì nên và không nên lưu.
+description: Memory được load thẳng vào system prompt nên được tuân theo mạnh hơn CLAUDE.md. Bài này phân tích cơ chế Memory của Claude Code - lưu ở đâu, giới hạn, bốn loại, cái gì nên và không nên lưu.
 tags:
   - claude-code
   - ai
@@ -20,6 +20,18 @@ Khác ở chỗ nào? Memory được load thẳng vào bên trong system prompt
 Còn CLAUDE.md chỉ là một user message, và bị gắn tín hiệu hạ quyền.
 
 Tức là cùng một lệnh, đặt trong memory sẽ được tuân theo hơn đặt trong CLAUDE.md.
+
+## Trước tiên: Memory lưu ở đâu trên máy
+
+```
+~/.claude/projects/{hash-đường-dẫn-project}/memory/
+├── MEMORY.md
+├── user_profile.md
+├── feedback_no_summary.md
+└── ...
+```
+
+Mỗi project có một hash riêng từ đường dẫn thư mục, nên memory của các project không bị lẫn vào nhau. Và đây chỉ là file markdown bình thường, bạn mở bằng editor bất kỳ, sửa thoải mái.
 
 ## Thứ nhất: MEMORY.md chỉ nên làm mục lục
 
@@ -54,6 +66,10 @@ Chỉ sửa đúng phần được yêu cầu.
 **How to apply:** Mọi thao tác chỉnh sửa code.
 ```
 
+Phần `Why` quan trọng hơn bạn nghĩ. Không có `Why` thì model chỉ chấp hành cứng nhắc, gặp edge case là bí. Có `Why` thì model hiểu được ý đồ, tự xử lý được những trường hợp không rõ ràng.
+
+Một điểm nữa: phải ghi cả thành công lẫn thất bại. Nhiều người chỉ ghi lại lỗi sai, kết quả là model ngày càng dè dặt và thụ động quá mức vì nó chỉ biết mình hay sai chứ không biết mình đã đúng ở đâu.
+
 **`user`** là hồ sơ người dùng, model sẽ điều chỉnh cách giao tiếp theo.
 
 **`project`** là context của dự án không suy ra được từ code. Lưu ý: dùng ngày tuyệt đối (`2026-04-03`), không dùng "thứ Năm" hay "tuần sau".
@@ -67,6 +83,8 @@ Chỉ sửa đúng phần được yêu cầu.
 - Bước fix bug đã có trong code
 - Nội dung đã có trong CLAUDE.md
 - Tiến độ task tạm thời
+
+Lý do chung của mấy thứ này: đều suy ra được từ nơi khác. `git log`, `git blame`, đọc code là ra hết. Memory chỉ nên lưu thứ không tồn tại ở bất kỳ đâu ngoài đầu bạn.
 
 Memory có giá trị nhất khi lưu những thứ không thể suy ra được từ nơi khác.
 
@@ -84,13 +102,15 @@ Hệ thống tự tính xem file memory bao nhiêu ngày tuổi. Từ 2 ngày tr
 
 > _"This memory is N days old. Memories are point-in-time observations, not live state — verify against current code before asserting as fact."_
 
-Cơ chế này giúp model không tin mù vào memory cũ. Nó vẫn dùng, nhưng sẽ đi verify lại trước.
+Cơ chế này giúp model không tin mù vào memory cũ. Nó vẫn dùng, nhưng sẽ đi verify lại trước. Cụ thể là: nếu memory đề cập đường dẫn file thì model sẽ check xem file đó còn tồn tại không, đề cập tên function thì grep trước. "Memory nói X tồn tại" không có nghĩa là X vẫn còn đó.
 
-Vì vậy đừng lưu thông tin gắn với dòng code cụ thể kiểu _"hàm X ở dòng 42"_. File thay đổi là thông tin đó lỗi thời ngay.
+Vì vậy đừng lưu thông tin gắn với dòng code cụ thể kiểu _"hàm X ở dòng 42"_. File thay đổi là thông tin đó lỗi thời ngay. Thay vào đó viết kiểu _"project dùng middleware pattern để xử lý auth, entry point ở main.go"_, mô tả ý đồ thay vì vị trí cụ thể.
 
 ## Thứ năm: Auto Memory
 
-Background agent tự quét cuộc trò chuyện và trích xuất thông tin đáng lưu, kể cả khi bạn không chủ động yêu cầu.
+Background agent tự quét cuộc trò chuyện và trích xuất thông tin đáng lưu, kể cả khi bạn không chủ động yêu cầu. Nó chỉ chạy khi lượt đó bạn chưa tự lưu memory thủ công, và feature `extractMemories` đang bật.
+
+Vì vậy trong thư mục memory của bạn có thể có những file bạn không nhớ là mình đã tạo, đó là do background agent tự trích xuất từ các cuộc trò chuyện trước.
 
 ## Thứ sáu: Reset sau `/compact` hoặc `/clear`
 
